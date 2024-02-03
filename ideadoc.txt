@@ -11,11 +11,12 @@ Mix visuals, words of support, animals facts and images, unique places
 Idea 3:
 Quiet place
 Simulate walking through a calm space (AI generate? Procedural generate?)
-User prompts on what they want in their space
+Generated background includes reassurance phrases?
 
 Idea 4:
 Water the universal solvent
 Write out your bad ideas, drop them into the water, watch them disintegrate
+User types input, text converted into objects, objects follow behavior
 
-Idea 5:
+Final Idea:
 

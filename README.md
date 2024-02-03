@@ -1,12 +1,15 @@
 # qwerhacks2024
 
-Team:
+# Team:
+
 Kyle Machnicki
+
 Cain Omomo
+
 Eden _____
 
-Project:
+# Project:
 __NAME__
 
-Description:
+# Description:
 __DESC__

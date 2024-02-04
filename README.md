@@ -6,10 +6,16 @@ Kyle Machnicki
 
 Cain Omomo
 
-Eden _____
-
 # Project:
-__NAME__
+
+WordSplat
 
 # Description:
-__DESC__
+
+Answer silly prompts and watch your words go splat :D
+
+# Run:
+
+Navigate to qwerhacks24/mysite
+
+In console, run command "python3 manage.py runserver"

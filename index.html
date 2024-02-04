@@ -3,9 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>My test page</title>
+    <title>Text Destroyer</title>
   </head>
   <body>
-    <img src="" alt="My test image" />
+    <img style="margin: auto;" src="" alt="Website banner image" />
+    <p style="text-align: center;"> Type what you want to see destroyed!</p>
+    <p style="text-align: center;"> Press enter when ready to destroy. </p>
+    <p style="text-align: center;"> Need ideas? </p>
+    <p style="text-align: center;"> Your ex's name </p>
+    <!-- Sort of scroll through these options, 
+      every few seconds a new idea swaps in via fast horizontal scroll,
+      the original exits to the left and the new enters on the right -->
+    <!-- Depressing thoughts -->
+    <!-- Secrets you want to get off your chest but can't -->
+    <!-- Your boss' name -->
+    <!-- The word DEADLINES -->
+    <!-- The word ANXIETY -->
+    <!-- The words PINEAPPLE ON PIZZA -->
+
+    <textarea> test </textarea>
+    <!-- Rather than an HTML element, it would make sense for the page
+      to detect user text input automatically. No input box visual.
+      The text just expands from center of the page like typing into
+      a center-aligned input area. But rather than rendering just text,
+      the page is generating the text as (groups of) physics objects.
+      Time is frozen while the user is typing, until they press ENTER.
+      Then time for the simulation starts. Simulation does not end until
+      web page reloads. -->
+    <!-- Simulation details: stretch goal, multiple fun simulation modes. 
+      But the basic should be fall, hit bottom of the page, and shatter.
+      Basically every letter is a bunch of 2D objects. They cannot overlap
+      and they all accelerate to the bottom of the screen. Normal force
+      stops them from falling. So it should look like a pile of junk once
+      blocks generally end up motionless. -->
+
   </body>
 </html>

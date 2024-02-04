@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CSRF_COOKIE_SECURE = False
+
 
 # Application definition
 
@@ -37,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'prompts.apps.PromptsConfig',
     'home.apps.HomeConfig',
+    'apis.apps.ApisConfig',
+    'snippets',
 ]
 
 MIDDLEWARE = [

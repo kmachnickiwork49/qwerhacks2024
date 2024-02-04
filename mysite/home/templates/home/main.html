@@ -81,14 +81,16 @@
         m;
         constructor(x, y, r_) {
           this.position = createVector(x, y);
-          this.velocity = createVector(0.5,0.47);
-          this.velocity.mult(3);
+          this.velocity = createVector(0.0,0.001);
+          //this.velocity.mult(3);
           this.radius_ = r_;
           this.m = this.radius_ * 0.1;
         }
 
         update() {
           this.position.add(this.velocity);
+          this.velocity.y = this.velocity.y + 0.1;
+          this.velocity.y = this.velocity.y * 0.99;
         }
 
         checkBoundaryCollision() {

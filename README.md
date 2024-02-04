@@ -19,3 +19,5 @@ Answer silly prompts and watch your words go splat :D
 Navigate to qwerhacks24/mysite
 
 In console, run command "python3 manage.py runserver"
+
+Open "http://localhost:8000/home/" in browser

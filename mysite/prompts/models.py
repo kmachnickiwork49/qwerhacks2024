@@ -1,4 +1,3 @@
-import datetime
 from django.db import models
 
 class Question(models.Model):
@@ -6,8 +5,6 @@ class Question(models.Model):
     pub_date = models.DateTimeField("date published")
     def __str__(self):
         return self.question_text
-    def was_published_recently(self):
-        return self.pub_date >= datetime.timezone.now() - datetime.timedelta(day=1)
 
 class Response(models.Model):
     response_text = models.CharField(max_length=100)

@@ -262,6 +262,13 @@
         curr_char = `${key}`;
         if (curr_char == 'Enter') {
           chars_in_sim = curr_vent_str;
+          postURL = "{{respPostURL}}" + "apis/";
+          let postData = {
+            'response': curr_vent_str,
+            'question_id': prompt.id
+          };
+          console.log(postData);
+          httpPost(postURL, postData);
 
           colorMode(RGB);
         fill(255,255,255);

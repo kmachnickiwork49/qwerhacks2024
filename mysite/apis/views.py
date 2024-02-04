@@ -13,6 +13,6 @@ def profile(request):
     newResp = Response()
     newResp.response_text = data.get("response")
     newResp.pub_date = datetime.datetime.now()
-    newResp.question_id = Question.objects.get(id=4)
+    newResp.question_id = Question.objects.get(id=data.get("question_id"))
     newResp.save()
     return render(request, "apis/responsePost.html", {"profile": data})

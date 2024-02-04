@@ -54,6 +54,11 @@
       let chars_in_sim = "";
       let debugStr = "";
       let balls;
+      let anon_bg_strs = "";
+      let anon_bg_str_src_arr = [];
+      let anon_bg_str_display_arr = [];
+      let anon_bg_x = [];
+      let anon_bg_y = [];
 
       function preload() {
         font = loadFont('{% static "assets/RobotoMono-Medium.otf"  %}');
@@ -230,11 +235,47 @@
 
       function draw() {
 
+        console.log("{{responses}}");
+
         colorMode(HSB);
         background(bg_time, 10, 255);
         bg_time += 1;
         if (bg_time > 340) {
           bg_time = 0;
+        }
+
+        for (let xx = 0; xx < 5; xx += 1) {
+            textSize(12);
+            text(anon_bg_str_display_arr[xx], anon_bg_x[xx], anon_bg_y[xx]); // Make random
+            textSize(36);
+        }
+
+        if (bg_time == 1) {
+            anon_bg_strs = "{{responses}}";
+            anon_bg_str_src_arr = [];
+            anon_bg_str_display_arr = [];
+            anon_bg_x = [];
+            anon_bg_y = [];
+            for (let jj = 0; jj < anon_bg_strs.length-12; jj += 1) {
+                if (anon_bg_strs.substring(jj, jj+10) == "Response: ") {
+                    let anon_str_add = "";
+                    for (let kk = jj+10; kk < anon_bg_strs.length; kk += 1) {
+                        if (anon_bg_strs[kk] == '&') {
+                            break;
+                        }
+                        anon_str_add = anon_str_add + anon_bg_strs[kk];
+                    }
+                    anon_bg_str_src_arr.push(anon_str_add);
+                }
+            }
+            console.log(anon_bg_str_src_arr);
+            for (let qq = 0; qq < 5; qq += 1) { 
+                let anon_str = random(anon_bg_str_src_arr); // Make random
+                console.log(anon_str);
+                anon_bg_str_display_arr.push(anon_str);
+                anon_bg_x.push(windowWidth*0.05 + random(windowWidth*0.5));
+                anon_bg_y.push(windowHeight*0.05 + random(windowHeight*0.5));
+            }
         }
 
         //fill(value);
@@ -266,7 +307,7 @@
           postURL = "{{respPostURL}}" + "apis/";
           let postData = {
             'response': curr_vent_str,
-            'question_id': prompt.id
+            'question_id': "{{prompt.id}}"
           };
           console.log(postData);
           httpPost(postURL, postData);

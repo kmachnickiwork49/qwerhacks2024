@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Text Destroyer</title>
+  </head>
+  <body>
+    <img style="margin: auto;" src="" alt="Website banner image" />
+    <p style="text-align: center;"> Type what you want to see destroyed!</p>
+    <p style="text-align: center;"> Press enter when ready to destroy. </p>
+    <p style="text-align: center;"> Need ideas? </p>
+    <p style="text-align: center;"> Your ex's name </p>
+    <!-- Sort of scroll through these options, 
+      every few seconds a new idea swaps in via fast horizontal scroll,
+      the original exits to the left and the new enters on the right -->
+    <!-- Depressing thoughts -->
+    <!-- Secrets you want to get off your chest but can't -->
+    <!-- Your boss' name -->
+    <!-- The word DEADLINES -->
+    <!-- The word ANXIETY -->
+    <!-- The words PINEAPPLE ON PIZZA -->
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!-- Rather than an HTML element, it would make sense for the page
+      to detect user text input automatically. No input box visual.
+      The text just expands from center of the page like typing into
+      a center-aligned input area. But rather than rendering just text,
+      the page is generating the text as (groups of) physics objects.
+      Time is frozen while the user is typing, until they press ENTER.
+      Then time for the simulation starts. Simulation does not end until
+      web page reloads. -->
+    <!-- Simulation details: stretch goal, multiple fun simulation modes. 
+      But the basic should be fall, hit bottom of the page, and shatter.
+      Basically every letter is a bunch of 2D objects. They cannot overlap
+      and they all accelerate to the bottom of the screen. Normal force
+      stops them from falling. So it should look like a pile of junk once
+      blocks generally end up motionless. -->
+
+  </body>
+
+  <body>
+    <!-- Rather than download, use the online version of the p5.js file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
+    <script type="text/javascript">
+
+      let bg_time = 0;
+      let value = 0;
+      let curr_char = 'a';
+      let curr_vent_str = "";
+      let font;
+      let chars_in_sim = "";
+      let debugStr = "";
+
+      function preload() {
+        font = loadFont('assets/RobotoMono-Medium.otf');
+      }
+
+      function setup() {
+        createCanvas(720, 400);
+        background(255, 255, 255);
+        textFont(font);
+        textSize(36);
+      };
+
+      class Bouncircle {
+        constructor(x, y, radius) {
+          this.x = x;
+          this.y = y;
+          this.radius = radius;
+        }
+      }
+
+      function draw() {
+        colorMode(HSB);
+        background(bg_time, 10, 255);
+        bg_time += 1;
+        if (bg_time > 340) {
+          bg_time = 0;
+        }
+
+        //fill(value);
+        //rect(25, 25, 50, 50);
+        text(curr_vent_str, width/2 - 10.85*(curr_vent_str.length), 40);
+
+        colorMode(RGB);
+        fill(255,255,255);
+        for (let j = 0; j < chars_in_sim.length; j++) {
+          let baseX = width/2 - 10.85*(chars_in_sim.length) + j*2*10.8 + 10.85;
+          let baseY = 40 - 12;
+          // Positive -> down, to the right
+          // Center -> 
+          switch (chars_in_sim[j]) {
+            case 'A':
+              circle(baseX+0.001953125, baseY+-11.603515625, 3);
+              circle(baseX+2.001953125, baseY+-8.603515625, 3);
+              circle(baseX+3.001953125, baseY+-4.603515625, 3);
+              circle(baseX+5.001953125, baseY+0.396484375, 3);
+              circle(baseX+6.001953125, baseY+5.396484375, 3);
+              circle(baseX+7.001953125, baseY+9.396484375, 3);
+              circle(baseX+-6.998046875, baseY+10.396484375, 3);
+              circle(baseX+-6.998046875, baseY+5.396484375, 3);
+              circle(baseX+-3.998046875, baseY+0.396484375, 3);
+              circle(baseX+-2.998046875, baseY+-3.603515625, 3);
+              circle(baseX+-1.998046875, baseY+-7.603515625, 3);
+              circle(baseX+-3.998046875, baseY+5.396484375, 3);
+              circle(baseX+-0.998046875, baseY+4.396484375, 3);
+              circle(baseX+3.001953125, baseY+5.396484375, 3);
+              break;
+            case 'B':
+              circle(baseX+-5.998046875, baseY+-12.603515625, 3);
+              circle(baseX+-1.998046875, baseY+-12.603515625, 3);
+              circle(baseX+2.001953125, baseY+-11.603515625, 3);
+              circle(baseX+6.001953125, baseY+-9.603515625, 3);
+              circle(baseX+7.001953125, baseY+-5.603515625, 3);
+              circle(baseX+5.001953125, baseY+-2.603515625, 3);
+              circle(baseX+0.001953125, baseY+-0.603515625, 3);
+              circle(baseX+-3.998046875, baseY+-0.603515625, 3);
+              circle(baseX+-5.998046875, baseY+-0.603515625, 3);
+              circle(baseX+-6.998046875, baseY+-4.603515625, 3);
+              circle(baseX+-5.998046875, baseY+-7.603515625, 3);
+              circle(baseX+-5.998046875, baseY+-9.603515625, 3);
+              circle(baseX+-6.998046875, baseY+3.396484375, 3);
+              circle(baseX+-6.998046875, baseY+6.396484375, 3);
+              circle(baseX+-6.998046875, baseY+10.396484375, 3);
+              circle(baseX+-3.998046875, baseY+11.396484375, 3);
+              circle(baseX+-0.998046875, baseY+11.396484375, 3);
+              circle(baseX+2.001953125, baseY+10.396484375, 3);
+              circle(baseX+5.001953125, baseY+8.396484375, 3);
+              circle(baseX+7.001953125, baseY+5.396484375, 3);
+              circle(baseX+7.001953125, baseY+2.396484375, 3);
+              circle(baseX+4.001953125, baseY+0.396484375, 3);
+              break;
+            case 'C':
+                circle(baseX+7.001953125, baseY+-7.603515625, 3);
+                circle(baseX+4.001953125, baseY+-11.603515625, 3);
+                circle(baseX+-1.998046875, baseY+-12.603515625, 3);
+                circle(baseX+-4.998046875, baseY+-9.603515625, 3);
+                circle(baseX+-6.998046875, baseY+-5.603515625, 3);
+                circle(baseX+-7.998046875, baseY+-0.603515625, 3);
+                circle(baseX+-6.998046875, baseY+4.396484375, 3);
+                circle(baseX+-4.998046875, baseY+8.396484375, 3);
+                circle(baseX+-0.998046875, baseY+10.396484375, 3);
+                circle(baseX+4.001953125, baseY+9.396484375, 3);
+                circle(baseX+6.001953125, baseY+5.396484375, 3);
+              break;
+            case 'D':
+              circle(baseX+-6.998046875, baseY+-11.603515625, 3);
+              circle(baseX+-5.998046875, baseY+-8.603515625, 3);
+              circle(baseX+-5.998046875, baseY+-4.603515625, 3);
+              circle(baseX+-5.998046875, baseY+-0.603515625, 3);
+              circle(baseX+-5.998046875, baseY+2.396484375, 3);
+              circle(baseX+-6.998046875, baseY+6.396484375, 3);
+              circle(baseX+-5.998046875, baseY+9.396484375, 3);
+              circle(baseX+-2.998046875, baseY+10.396484375, 3);
+              circle(baseX+2.001953125, baseY+9.396484375, 3);
+              circle(baseX+6.001953125, baseY+5.396484375, 3);
+              circle(baseX+7.001953125, baseY+1.396484375, 3);
+              circle(baseX+7.001953125, baseY+-3.603515625, 3);
+              circle(baseX+6.001953125, baseY+-7.603515625, 3);
+              circle(baseX+2.001953125, baseY+-10.603515625, 3);
+              circle(baseX+-2.998046875, baseY+-11.603515625, 3);
+              break;
+            case 'E':
+            circle(baseX+6.001953125, baseY+-11.603515625, 3);
+circle(baseX+3.001953125, baseY+-11.603515625, 3);
+circle(baseX+0.001953125, baseY+-11.603515625, 3);
+circle(baseX+-3.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-7.603515625, 3);
+circle(baseX+-5.998046875, baseY+-3.603515625, 3);
+circle(baseX+-5.998046875, baseY+-0.603515625, 3);
+circle(baseX+-5.998046875, baseY+4.396484375, 3);
+circle(baseX+-5.998046875, baseY+9.396484375, 3);
+circle(baseX+-2.998046875, baseY+10.396484375, 3);
+circle(baseX+0.001953125, baseY+10.396484375, 3);
+circle(baseX+4.001953125, baseY+10.396484375, 3);
+circle(baseX+6.001953125, baseY+10.396484375, 3);
+circle(baseX+5.001953125, baseY+-1.603515625, 3);
+circle(baseX+2.001953125, baseY+-1.603515625, 3);
+circle(baseX+-0.998046875, baseY+-1.603515625, 3);
+circle(baseX+-2.998046875, baseY+-1.603515625, 3);
+              break;
+            case 'F':
+            circle(baseX+7.001953125, baseY+-11.603515625, 3);
+circle(baseX+3.001953125, baseY+-11.603515625, 3);
+circle(baseX+-0.998046875, baseY+-11.603515625, 3);
+circle(baseX+-4.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-9.603515625, 3);
+circle(baseX+-5.998046875, baseY+-5.603515625, 3);
+circle(baseX+-4.998046875, baseY+-1.603515625, 3);
+circle(baseX+-5.998046875, baseY+1.396484375, 3);
+circle(baseX+-5.998046875, baseY+4.396484375, 3);
+circle(baseX+-5.998046875, baseY+9.396484375, 3);
+circle(baseX+-1.998046875, baseY+-0.603515625, 3);
+circle(baseX+1.001953125, baseY+-0.603515625, 3);
+circle(baseX+4.001953125, baseY+-0.603515625, 3);
+              break;
+            case 'G':
+            circle(baseX+6.001953125, baseY+-7.603515625, 3);
+circle(baseX+5.001953125, baseY+-10.603515625, 3);
+circle(baseX+1.001953125, baseY+-12.603515625, 3);
+circle(baseX+-3.998046875, baseY+-12.603515625, 3);
+circle(baseX+-4.998046875, baseY+-9.603515625, 3);
+circle(baseX+-6.998046875, baseY+-5.603515625, 3);
+circle(baseX+-7.998046875, baseY+-1.603515625, 3);
+circle(baseX+-6.998046875, baseY+3.396484375, 3);
+circle(baseX+-4.998046875, baseY+6.396484375, 3);
+circle(baseX+-2.998046875, baseY+9.396484375, 3);
+circle(baseX+1.001953125, baseY+10.396484375, 3);
+circle(baseX+6.001953125, baseY+9.396484375, 3);
+circle(baseX+7.001953125, baseY+5.396484375, 3);
+circle(baseX+7.001953125, baseY+1.396484375, 3);
+circle(baseX+4.001953125, baseY+1.396484375, 3);
+circle(baseX+1.001953125, baseY+1.396484375, 3);
+              break;
+            case 'H':
+            circle(baseX+-6.998046875, baseY+-11.603515625, 3);
+circle(baseX+-6.998046875, baseY+-7.603515625, 3);
+circle(baseX+-6.998046875, baseY+-3.603515625, 3);
+circle(baseX+-6.998046875, baseY+0.396484375, 3);
+circle(baseX+-6.998046875, baseY+3.396484375, 3);
+circle(baseX+-6.998046875, baseY+8.396484375, 3);
+circle(baseX+6.001953125, baseY+9.396484375, 3);
+circle(baseX+6.001953125, baseY+6.396484375, 3);
+circle(baseX+6.001953125, baseY+3.396484375, 3);
+circle(baseX+6.001953125, baseY+0.396484375, 3);
+circle(baseX+6.001953125, baseY+-3.603515625, 3);
+circle(baseX+6.001953125, baseY+-7.603515625, 3);
+circle(baseX+6.001953125, baseY+-11.603515625, 3);
+circle(baseX+2.001953125, baseY+-1.603515625, 3);
+circle(baseX+-0.998046875, baseY+-0.603515625, 3);
+circle(baseX+-3.998046875, baseY+-0.603515625, 3);
+              break;
+            case 'I':
+            circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-3.998046875, baseY+-11.603515625, 3);
+circle(baseX+0.001953125, baseY+-11.603515625, 3);
+circle(baseX+4.001953125, baseY+-11.603515625, 3);
+circle(baseX+5.001953125, baseY+-11.603515625, 3);
+circle(baseX+-0.998046875, baseY+-8.603515625, 3);
+circle(baseX+0.001953125, baseY+-4.603515625, 3);
+circle(baseX+0.001953125, baseY+0.396484375, 3);
+circle(baseX+0.001953125, baseY+3.396484375, 3);
+circle(baseX+0.001953125, baseY+6.396484375, 3);
+circle(baseX+0.001953125, baseY+10.396484375, 3);
+circle(baseX+3.001953125, baseY+10.396484375, 3);
+circle(baseX+6.001953125, baseY+10.396484375, 3);
+circle(baseX+-3.998046875, baseY+10.396484375, 3);
+circle(baseX+-6.998046875, baseY+10.396484375, 3);
+              break;
+            case 'J':
+            circle(baseX+-6.998046875, baseY+6.396484375, 3);
+circle(baseX+-4.998046875, baseY+8.396484375, 3);
+circle(baseX+-1.998046875, baseY+10.396484375, 3);
+circle(baseX+2.001953125, baseY+10.396484375, 3);
+circle(baseX+5.001953125, baseY+7.396484375, 3);
+circle(baseX+6.001953125, baseY+3.396484375, 3);
+circle(baseX+6.001953125, baseY+-1.603515625, 3);
+circle(baseX+6.001953125, baseY+-4.603515625, 3);
+circle(baseX+6.001953125, baseY+-8.603515625, 3);
+circle(baseX+6.001953125, baseY+-12.603515625, 3);
+              break;
+            case 'K':
+            circle(baseX+-6.998046875, baseY+-11.603515625, 3);
+circle(baseX+-6.998046875, baseY+-8.603515625, 3);
+circle(baseX+-5.998046875, baseY+-4.603515625, 3);
+circle(baseX+-5.998046875, baseY+-1.603515625, 3);
+circle(baseX+-5.998046875, baseY+2.396484375, 3);
+circle(baseX+-5.998046875, baseY+6.396484375, 3);
+circle(baseX+-6.998046875, baseY+9.396484375, 3);
+circle(baseX+-0.998046875, baseY+-2.603515625, 3);
+circle(baseX+1.001953125, baseY+-5.603515625, 3);
+circle(baseX+5.001953125, baseY+-8.603515625, 3);
+circle(baseX+7.001953125, baseY+-11.603515625, 3);
+circle(baseX+1.001953125, baseY+-0.603515625, 3);
+circle(baseX+3.001953125, baseY+3.396484375, 3);
+circle(baseX+5.001953125, baseY+6.396484375, 3);
+circle(baseX+7.001953125, baseY+10.396484375, 3);
+              break;
+            case 'L':
+            circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-7.603515625, 3);
+circle(baseX+-5.998046875, baseY+-3.603515625, 3);
+circle(baseX+-5.998046875, baseY+0.396484375, 3);
+circle(baseX+-5.998046875, baseY+4.396484375, 3);
+circle(baseX+-5.998046875, baseY+7.396484375, 3);
+circle(baseX+-3.998046875, baseY+10.396484375, 3);
+circle(baseX+0.001953125, baseY+10.396484375, 3);
+circle(baseX+2.001953125, baseY+10.396484375, 3);
+circle(baseX+6.001953125, baseY+10.396484375, 3);
+              break;
+            case 'M':
+            circle(baseX+-6.998046875, baseY+10.396484375, 3);
+circle(baseX+-6.998046875, baseY+6.396484375, 3);
+circle(baseX+-6.998046875, baseY+2.396484375, 3);
+circle(baseX+-5.998046875, baseY+-2.603515625, 3);
+circle(baseX+-6.998046875, baseY+-6.603515625, 3);
+circle(baseX+-6.998046875, baseY+-11.603515625, 3);
+circle(baseX+-2.998046875, baseY+-9.603515625, 3);
+circle(baseX+-1.998046875, baseY+-3.603515625, 3);
+circle(baseX+0.001953125, baseY+1.396484375, 3);
+circle(baseX+2.001953125, baseY+-2.603515625, 3);
+circle(baseX+3.001953125, baseY+-7.603515625, 3);
+circle(baseX+5.001953125, baseY+-10.603515625, 3);
+circle(baseX+7.001953125, baseY+-7.603515625, 3);
+circle(baseX+7.001953125, baseY+-3.603515625, 3);
+circle(baseX+7.001953125, baseY+0.396484375, 3);
+circle(baseX+7.001953125, baseY+3.396484375, 3);
+circle(baseX+7.001953125, baseY+7.396484375, 3);
+circle(baseX+7.001953125, baseY+10.396484375, 3);
+circle(baseX+7.001953125, baseY+-12.603515625, 3);
+              break;
+            case 'N':
+            circle(baseX+-5.998046875, baseY+10.396484375, 3);
+circle(baseX+-5.998046875, baseY+7.396484375, 3);
+circle(baseX+-6.998046875, baseY+3.396484375, 3);
+circle(baseX+-6.998046875, baseY+-1.603515625, 3);
+circle(baseX+-6.998046875, baseY+-5.603515625, 3);
+circle(baseX+-6.998046875, baseY+-11.603515625, 3);
+circle(baseX+-3.998046875, baseY+-6.603515625, 3);
+circle(baseX+-0.998046875, baseY+-2.603515625, 3);
+circle(baseX+0.001953125, baseY+1.396484375, 3);
+circle(baseX+3.001953125, baseY+6.396484375, 3);
+circle(baseX+6.001953125, baseY+10.396484375, 3);
+circle(baseX+6.001953125, baseY+5.396484375, 3);
+circle(baseX+6.001953125, baseY+0.396484375, 3);
+circle(baseX+6.001953125, baseY+-5.603515625, 3);
+circle(baseX+6.001953125, baseY+-8.603515625, 3);
+circle(baseX+6.001953125, baseY+-12.603515625, 3);
+              break;
+            case 'O':
+            circle(baseX+-7.998046875, baseY+0.396484375, 3);
+circle(baseX+-6.998046875, baseY+-2.603515625, 3);
+circle(baseX+-6.998046875, baseY+-6.603515625, 3);
+circle(baseX+-3.998046875, baseY+-10.603515625, 3);
+circle(baseX+0.001953125, baseY+-11.603515625, 3);
+circle(baseX+5.001953125, baseY+-9.603515625, 3);
+circle(baseX+6.001953125, baseY+-5.603515625, 3);
+circle(baseX+7.001953125, baseY+-1.603515625, 3);
+circle(baseX+7.001953125, baseY+3.396484375, 3);
+circle(baseX+5.001953125, baseY+7.396484375, 3);
+circle(baseX+2.001953125, baseY+10.396484375, 3);
+circle(baseX+-2.998046875, baseY+10.396484375, 3);
+circle(baseX+-5.998046875, baseY+6.396484375, 3);
+circle(baseX+-6.998046875, baseY+3.396484375, 3);
+              break;
+            case 'P':
+            circle(baseX+-5.998046875, baseY+10.396484375, 3);
+circle(baseX+-5.998046875, baseY+8.396484375, 3);
+circle(baseX+-5.998046875, baseY+4.396484375, 3);
+circle(baseX+-5.998046875, baseY+0.396484375, 3);
+circle(baseX+-1.998046875, baseY+0.396484375, 3);
+circle(baseX+2.001953125, baseY+0.396484375, 3);
+circle(baseX+6.001953125, baseY+-1.603515625, 3);
+circle(baseX+8.001953125, baseY+-4.603515625, 3);
+circle(baseX+6.001953125, baseY+-9.603515625, 3);
+circle(baseX+2.001953125, baseY+-11.603515625, 3);
+circle(baseX+-2.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-7.603515625, 3);
+circle(baseX+-5.998046875, baseY+-4.603515625, 3);
+              break;
+            case 'Q':
+            circle(baseX+7.001953125, baseY+14.396484375, 3);
+circle(baseX+5.001953125, baseY+11.396484375, 3);
+circle(baseX+4.001953125, baseY+9.396484375, 3);
+circle(baseX+-0.998046875, baseY+11.396484375, 3);
+circle(baseX+-5.998046875, baseY+8.396484375, 3);
+circle(baseX+-7.998046875, baseY+3.396484375, 3);
+circle(baseX+-7.998046875, baseY+-1.603515625, 3);
+circle(baseX+-6.998046875, baseY+-5.603515625, 3);
+circle(baseX+-3.998046875, baseY+-10.603515625, 3);
+circle(baseX+-0.998046875, baseY+-11.603515625, 3);
+circle(baseX+3.001953125, baseY+-11.603515625, 3);
+circle(baseX+6.001953125, baseY+-7.603515625, 3);
+circle(baseX+7.001953125, baseY+-3.603515625, 3);
+circle(baseX+7.001953125, baseY+1.396484375, 3);
+circle(baseX+7.001953125, baseY+4.396484375, 3);
+              break;
+            case 'R':
+            circle(baseX+-5.998046875, baseY+9.396484375, 3);
+circle(baseX+-5.998046875, baseY+6.396484375, 3);
+circle(baseX+-5.998046875, baseY+2.396484375, 3);
+circle(baseX+-5.998046875, baseY+-0.603515625, 3);
+circle(baseX+-5.998046875, baseY+-5.603515625, 3);
+circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-1.998046875, baseY+-12.603515625, 3);
+circle(baseX+4.001953125, baseY+-11.603515625, 3);
+circle(baseX+6.001953125, baseY+-7.603515625, 3);
+circle(baseX+6.001953125, baseY+-3.603515625, 3);
+circle(baseX+3.001953125, baseY+0.396484375, 3);
+circle(baseX+0.001953125, baseY+0.396484375, 3);
+circle(baseX+5.001953125, baseY+5.396484375, 3);
+circle(baseX+6.001953125, baseY+8.396484375, 3);
+circle(baseX+3.001953125, baseY+3.396484375, 3);
+circle(baseX+-2.998046875, baseY+0.396484375, 3);
+              break;
+            case 'S':
+            circle(baseX+-6.998046875, baseY+5.396484375, 3);
+circle(baseX+-4.998046875, baseY+8.396484375, 3);
+circle(baseX+0.001953125, baseY+10.396484375, 3);
+circle(baseX+5.001953125, baseY+9.396484375, 3);
+circle(baseX+8.001953125, baseY+6.396484375, 3);
+circle(baseX+5.001953125, baseY+2.396484375, 3);
+circle(baseX+0.001953125, baseY+-1.603515625, 3);
+circle(baseX+-3.998046875, baseY+-3.603515625, 3);
+circle(baseX+-5.998046875, baseY+-6.603515625, 3);
+circle(baseX+-3.998046875, baseY+-10.603515625, 3);
+circle(baseX+0.001953125, baseY+-11.603515625, 3);
+circle(baseX+4.001953125, baseY+-11.603515625, 3);
+circle(baseX+7.001953125, baseY+-7.603515625, 3);
+              break;
+            case 'T':
+            circle(baseX+-0.998046875, baseY+10.396484375, 3);
+circle(baseX+-0.998046875, baseY+7.396484375, 3);
+circle(baseX+0.001953125, baseY+2.396484375, 3);
+circle(baseX+0.001953125, baseY+-1.603515625, 3);
+circle(baseX+-0.998046875, baseY+-5.603515625, 3);
+circle(baseX+0.001953125, baseY+-9.603515625, 3);
+circle(baseX+0.001953125, baseY+-12.603515625, 3);
+circle(baseX+-4.998046875, baseY+-12.603515625, 3);
+circle(baseX+-7.998046875, baseY+-12.603515625, 3);
+circle(baseX+3.001953125, baseY+-12.603515625, 3);
+circle(baseX+7.001953125, baseY+-12.603515625, 3);
+              break;
+            case 'U':
+            circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-6.998046875, baseY+-8.603515625, 3);
+circle(baseX+-5.998046875, baseY+-3.603515625, 3);
+circle(baseX+-5.998046875, baseY+0.396484375, 3);
+circle(baseX+-6.998046875, baseY+5.396484375, 3);
+circle(baseX+-3.998046875, baseY+8.396484375, 3);
+circle(baseX+-0.998046875, baseY+10.396484375, 3);
+circle(baseX+4.001953125, baseY+8.396484375, 3);
+circle(baseX+7.001953125, baseY+5.396484375, 3);
+circle(baseX+6.001953125, baseY+0.396484375, 3);
+circle(baseX+7.001953125, baseY+-3.603515625, 3);
+circle(baseX+7.001953125, baseY+-8.603515625, 3);
+circle(baseX+6.001953125, baseY+-11.603515625, 3);
+              break;
+            case 'V':
+            circle(baseX+-7.998046875, baseY+-11.603515625, 3);
+circle(baseX+-5.998046875, baseY+-8.603515625, 3);
+circle(baseX+-4.998046875, baseY+-3.603515625, 3);
+circle(baseX+-3.998046875, baseY+1.396484375, 3);
+circle(baseX+-1.998046875, baseY+5.396484375, 3);
+circle(baseX+0.001953125, baseY+9.396484375, 3);
+circle(baseX+3.001953125, baseY+4.396484375, 3);
+circle(baseX+4.001953125, baseY+-0.603515625, 3);
+circle(baseX+5.001953125, baseY+-5.603515625, 3);
+circle(baseX+7.001953125, baseY+-11.603515625, 3);
+              break;
+            case 'W':
+            circle(baseX+-7.998046875, baseY+-11.603515625, 3);
+circle(baseX+-7.998046875, baseY+-8.603515625, 3);
+circle(baseX+-6.998046875, baseY+-4.603515625, 3);
+circle(baseX+-5.998046875, baseY+0.396484375, 3);
+circle(baseX+-5.998046875, baseY+4.396484375, 3);
+circle(baseX+-4.998046875, baseY+9.396484375, 3);
+circle(baseX+-2.998046875, baseY+4.396484375, 3);
+circle(baseX+-2.998046875, baseY+-0.603515625, 3);
+circle(baseX+-0.998046875, baseY+-4.603515625, 3);
+circle(baseX+-0.998046875, baseY+-8.603515625, 3);
+circle(baseX+1.001953125, baseY+-10.603515625, 3);
+circle(baseX+1.001953125, baseY+-5.603515625, 3);
+circle(baseX+2.001953125, baseY+-1.603515625, 3);
+circle(baseX+3.001953125, baseY+3.396484375, 3);
+circle(baseX+5.001953125, baseY+8.396484375, 3);
+circle(baseX+6.001953125, baseY+4.396484375, 3);
+circle(baseX+7.001953125, baseY+-0.603515625, 3);
+circle(baseX+8.001953125, baseY+-6.603515625, 3);
+circle(baseX+8.001953125, baseY+-12.603515625, 3);
+              break;
+            case 'X':
+            circle(baseX+-5.998046875, baseY+-11.603515625, 3);
+circle(baseX+-3.998046875, baseY+-8.603515625, 3);
+circle(baseX+-1.998046875, baseY+-4.603515625, 3);
+circle(baseX+0.001953125, baseY+-1.603515625, 3);
+circle(baseX+2.001953125, baseY+2.396484375, 3);
+circle(baseX+5.001953125, baseY+5.396484375, 3);
+circle(baseX+7.001953125, baseY+10.396484375, 3);
+circle(baseX+7.001953125, baseY+-11.603515625, 3);
+circle(baseX+6.001953125, baseY+-8.603515625, 3);
+circle(baseX+4.001953125, baseY+-5.603515625, 3);
+circle(baseX+-1.998046875, baseY+2.396484375, 3);
+circle(baseX+-3.998046875, baseY+6.396484375, 3);
+circle(baseX+-5.998046875, baseY+10.396484375, 3);
+              break;
+            case 'Y':
+            circle(baseX+0.001953125, baseY+10.396484375, 3);
+circle(baseX+0.001953125, baseY+6.396484375, 3);
+circle(baseX+0.001953125, baseY+2.396484375, 3);
+circle(baseX+-2.998046875, baseY+-1.603515625, 3);
+circle(baseX+-3.998046875, baseY+-5.603515625, 3);
+circle(baseX+-5.998046875, baseY+-9.603515625, 3);
+circle(baseX+-6.998046875, baseY+-12.603515625, 3);
+circle(baseX+7.001953125, baseY+-12.603515625, 3);
+circle(baseX+5.001953125, baseY+-8.603515625, 3);
+circle(baseX+3.001953125, baseY+-4.603515625, 3);
+circle(baseX+1.001953125, baseY+-0.603515625, 3);
+              break;
+            case 'Z':
+            circle(baseX+-6.998046875, baseY+-11.603515625, 3);
+circle(baseX+-2.998046875, baseY+-11.603515625, 3);
+circle(baseX+1.001953125, baseY+-11.603515625, 3);
+circle(baseX+5.001953125, baseY+-11.603515625, 3);
+circle(baseX+5.001953125, baseY+-7.603515625, 3);
+circle(baseX+1.001953125, baseY+-3.603515625, 3);
+circle(baseX+-1.998046875, baseY+0.396484375, 3);
+circle(baseX+-3.998046875, baseY+4.396484375, 3);
+circle(baseX+-6.998046875, baseY+9.396484375, 3);
+circle(baseX+-1.998046875, baseY+10.396484375, 3);
+circle(baseX+2.001953125, baseY+10.396484375, 3);
+circle(baseX+6.001953125, baseY+10.396484375, 3);
+              break;
+            default:
+              //circle(baseX, baseY, 3);
+              break;
+          }
+        }
+        colorMode(RGB);
+        fill(0,0,0);
+
+      }
+
+      function keyPressed() {
+        curr_char = `${key}`;
+        if (curr_char == 'Enter') {
+          chars_in_sim = curr_vent_str;
+          curr_vent_str = "";
+        } else if ( curr_char == 'a' || curr_char == 'b' || curr_char == 'c' || curr_char == 'd' || curr_char == 'e' || 
+        curr_char == 'f' || curr_char == 'g' || curr_char == 'h' || curr_char == 'i' || curr_char == 'j' || 
+        curr_char == 'k' || curr_char == 'l' || curr_char == 'm' || curr_char == 'n' || curr_char == 'o' || 
+        curr_char == 'p' || curr_char == 'q' || curr_char == 'r' || curr_char == 's' || curr_char == 't' || 
+        curr_char == 'u' || curr_char == 'v' || curr_char == 'w' || curr_char == 'x' || curr_char == 'y' || 
+        curr_char == 'z' || 
+        curr_char == 'A' || curr_char == 'B' || curr_char == 'C' || curr_char == 'D' || curr_char == 'E' || 
+        curr_char == 'F' || curr_char == 'G' || curr_char == 'H' || curr_char == 'I' || curr_char == 'J' || 
+        curr_char == 'K' || curr_char == 'L' || curr_char == 'M' || curr_char == 'N' || curr_char == 'O' || 
+        curr_char == 'P' || curr_char == 'Q' || curr_char == 'R' || curr_char == 'S' || curr_char == 'T' || 
+        curr_char == 'U' || curr_char == 'V' || curr_char == 'W' || curr_char == 'X' || curr_char == 'Y' || 
+        curr_char == 'Z' 
+        || curr_char == ' ') {
+          curr_vent_str = curr_vent_str + curr_char.toUpperCase();
+        }
+      }
+
+      /*
+      function mousePressed() {
+        stroke(0, 255, 0);
+        circle(mouseX, mouseY, 5);
+        noStroke();
+        debugStr += "circle(baseX+" + (mouseX-width/2) + ", baseY+" + (mouseY-28) + ", 3);\n";
+        console.log(debugStr);
+        // prevent default
+        return false;
+      }
+      */
+
+    </script>
+  </body>
+
+</html>

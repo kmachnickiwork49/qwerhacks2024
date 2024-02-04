@@ -1,0 +1,16 @@
+<div>
+    <h1>{{ question. }}</h1>
+    <p>{{ question.question_text }}</p>
+    {% if responses %}
+    <ul>
+        <body>User Responses:</body>
+        <ul>
+        {% for response in responses %}
+            <li>{{ response.pub_date.date }} at {{response.pub_date.time}}: {{ response.response_text }}</li>
+        {% endfor %}
+        </ul>
+    </ul>
+    {% else %}
+        <p>No one has responded.</p>
+    {% endif %}
+</div>
